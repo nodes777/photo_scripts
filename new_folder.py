@@ -31,11 +31,14 @@ def move_photos_from_camera_to_comp(camera_path,new_folder):
 def create_keepers_folder(new_folder_name):
     # Create the same folder name, under /Keepers
     new_keepers_folder = os.path.join(keepers_path,new_folder_name)
+    # TODO Rename descriptions_tempplate to descriptions
+
     os.makedirs(new_keepers_folder,exist_ok=False)
     print(f'Created New Folder {new_folder}') 
     # Copy a descriptions file from template
     descriptions_file = shutil.copy(descriptions_template_path,new_keepers_folder)
     os.startfile(descriptions_file)
+    # TODO: open first image
 
 
 
