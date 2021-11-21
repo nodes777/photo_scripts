@@ -7,11 +7,14 @@ import shutil
 camera_path = "E:/DCIM/108D3400"
 photos_path = "D:\Photos"
 keepers_path = "D:\Photos\Keepers"
-descriptions_template_path = "D:\Photos\Keepers\descriptions_template.ods"
+descriptions_template_path = "D:\Photos\Keepers\descriptions_template.xlsx"
 todays_date =  datetime.today().strftime('%Y-%m-%d')
 
+MissingInputError = "Error No Folder Name Provided"
 
 def make_new_folder(folder_name_input):
+    if(folder_name_input == None):
+        raise MissingInputError()
     new_folder_name = folder_name_input + "_" + todays_date
     new_folder = os.path.join(photos_path,new_folder_name)
     os.makedirs(new_folder,exist_ok=False)
@@ -39,6 +42,8 @@ def create_keepers_folder(new_folder_name):
     descriptions_file = shutil.copy(descriptions_template_path,new_keepers_folder)
     os.startfile(descriptions_file)
     # TODO: open first image
+
+    return descriptions_file
 
 
 
