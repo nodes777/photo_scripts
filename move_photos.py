@@ -78,5 +78,6 @@ print("\n Done!")
 # TODO: Figure out sleep from new_folder.py
 # TODO: Delete NEF files that aren't moved
 # TODO: Check if all iNat paths are unique - Send warning if not
-
-
+# TODO: Add a README.md
+# TODO: Create an intializer function that creates a config file for specific paths for camera path and photos path
+# TODO: Rename the descriptions_template.xlsx to just descriptions
