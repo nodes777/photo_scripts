@@ -35,7 +35,6 @@ file_names_to_move = []
 for index, row in descriptions_df.iterrows():
     photo_nums_str = row['Photo Numbers']
 
-
     # Q: NaN is a float for some reason - WHY?
     if not isinstance(photo_nums_str, float):
         # QUESTION: Why isnt this splitting on the ;?
@@ -45,7 +44,6 @@ for index, row in descriptions_df.iterrows():
         # filter does a filter, returns an iterator, list() puts it in a list
         # QUESTION: What is the diff between an iterator and a list? - I think of these both as arrays
         photo_nums = list(filter(None, photo_nums_str.replace(",",";").split(";")))
-
 
         # Create 4 digit value for each num b/c thats the file format
         # Q: Is there a better way to match the file names to the nums?
@@ -61,7 +59,7 @@ for index, row in descriptions_df.iterrows():
             # Should I add them here or do logic to filter somewhere before trying to move
             file_names_to_move.append(file_name + ".JPG")
             file_names_to_move.append(file_name + ".NEF")
-            # file_names_to_move.append(file_name + ".MOV")
+            file_names_to_move.append(file_name + ".MOV")
 
 
 # For each file_names_to_move, try to move each kind of file
@@ -70,7 +68,7 @@ for idx, file_name_to_move in enumerate(file_names_to_move):
     if(os.path.isfile(file_in_path)):
         shutil.move(file_in_path, temp_destination_path)
         # end="\r" print to start where previous one ended, to remove previous line in terminal
-        print(f"Moving {file_in_path} {idx}/{len(file_names_to_move)-1}", end="\r")
+        print(f"Moving {file_in_path} {idx}/{round(len(file_names_to_move)-1/2)}", end="\r")
 
 print("\n Done!")
 
@@ -78,6 +76,5 @@ print("\n Done!")
 # TODO: Figure out sleep from new_folder.py
 # TODO: Delete NEF files that aren't moved
 # TODO: Check if all iNat paths are unique - Send warning if not
-# TODO: Add a README.md
 # TODO: Create an intializer function that creates a config file for specific paths for camera path and photos path
 # TODO: Rename the descriptions_template.xlsx to just descriptions

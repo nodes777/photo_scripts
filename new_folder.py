@@ -3,6 +3,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 import shutil
+import time
+
+start_time = time.time()
 
 camera_path = "E:/DCIM/108D3400"
 photos_path = "D:\Photos"
@@ -52,3 +55,4 @@ new_folder, new_folder_name = make_new_folder(sys.argv[1])
 move_photos_from_camera_to_comp(camera_path, new_folder)
 
 create_keepers_folder(new_folder_name)
+print("--- %s seconds ---" % (time.time() - start_time))
