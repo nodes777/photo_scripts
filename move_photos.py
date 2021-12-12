@@ -12,17 +12,10 @@ file_suffixes = [".JPG", ".NEF", ".MOV"]
 
 delimeters = [";", ","]
 
-#  prefixing with "r" produces a raw string
-temp_descriptions_path = r"D:\Photos\Keepers\test_2021-12-05\descriptions.xlsx"
-temp_initial_path = temp_descriptions_path.replace(
-    "Keepers\\", "").replace("descriptions.xlsx", "")
-temp_destination_path = temp_descriptions_path.replace("descriptions.xlsx", "")
-
-# Need path to descriptions.ods in keepers
-# Need the name of new_keepers_folder from prev flow
+temp_descriptions_path = r"D:\Photos\Keepers\Loftus_Loop_2021-12-05\descriptions.xlsx"
 
 
-def read_sheet(descriptions_path):
+def read_sheet(descriptions_path, initial_path):
     descriptions_df = pd.read_excel(descriptions_path)
     print(descriptions_df.head())
 
@@ -49,19 +42,19 @@ def read_sheet(descriptions_path):
 
                 for j, file_suffix in enumerate(file_suffixes):
                     potential_file = file_name + file_suffix
-                    file_in_path = temp_initial_path + potential_file
+                    file_in_path = initial_path + potential_file
                     if(os.path.isfile(file_in_path)):
                         file_names_to_move.append(potential_file)
     return file_names_to_move
 
 
-def move_photos(files):
+def move_photos(files, initial_path, destination_path):
     num_moved = 0
     # For each file_names_to_move, try to move each kind of file
     for i, file_name_to_move in enumerate(files):
-        file_in_path = temp_initial_path + file_name_to_move
+        file_in_path = initial_path + file_name_to_move
         if(os.path.isfile(file_in_path)):
-            shutil.move(file_in_path, temp_destination_path)
+            shutil.move(file_in_path, destination_path)
             print(
                 f"Moving: {file_in_path} {i+1}/{len(files)}", end="\r")
             num_moved += 1
@@ -87,14 +80,14 @@ def delete_nef_files(path):
     print(f"\nDeleted: {num_deleted} files to Recycling Bin")
 
 
-files_to_move = read_sheet(temp_descriptions_path)
-move_photos(files_to_move)
-delete_nef_files(temp_initial_path)
-print("\nDone!")
-print("--- %s seconds ---" % (time.time() - start_time))
-
-# TODO: Figure out sleep from new_folder.py
-# TODO: Check if all iNat paths are unique - Send warning if not
-# TODO: Create an intializer function that creates a config file for
-# specific paths for camera path and photos path
-# TODO: Allow for ranges of photo nums
+def sort_photos(descriptions_path=temp_descriptions_path):
+    #  prefixing with "r" produces a raw string
+    initial_path = descriptions_path.replace(
+        "Keepers\\", "").replace("descriptions.xlsx", "")
+    destination_path = descriptions_path.replace(
+        "descriptions.xlsx", "")
+    files_to_move = read_sheet(descriptions_path, initial_path)
+    move_photos(files_to_move, initial_path, destination_path)
+    delete_nef_files(initial_path)
+    print("\nDone!")
+    print("--- %s seconds ---" % (time.time() - start_time))

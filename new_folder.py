@@ -1,10 +1,8 @@
 import os
-import sys
 from datetime import datetime
 import shutil
 import time
 
-start_time = time.time()
 
 camera_path = "E:/DCIM/108D3400"
 photos_path = r"D:\Photos"
@@ -46,17 +44,17 @@ def create_keepers_folder(new_folder_name):
     descriptions_copy = shutil.copy(
         descriptions_template_path, new_keepers_folder)
     # Remove the "template" part of the name
-    descriptions_file = new_keepers_folder + "/" + descriptions_file_name
+    descriptions_file = new_keepers_folder + "\\" + descriptions_file_name
     os.rename(descriptions_copy, descriptions_file)
     os.startfile(descriptions_file)
     os.startfile(new_keepers_folder)
-    return new_keepers_folder
+    return descriptions_file
 
 
-new_folder, new_folder_name = make_new_folder(sys.argv[1])
-
-move_photos_from_camera_to_comp(camera_path, new_folder)
-
-create_keepers_folder(new_folder_name)
-
-print("--- %s seconds ---" % (time.time() - start_time))
+def create_new_expedition(folder_name_input):
+    start_time = time.time()
+    new_folder, new_folder_name = make_new_folder(folder_name_input)
+    move_photos_from_camera_to_comp(camera_path, new_folder)
+    descriptions_file = create_keepers_folder(new_folder_name)
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return descriptions_file
