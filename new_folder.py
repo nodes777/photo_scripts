@@ -57,4 +57,5 @@ def create_new_expedition(folder_name_input):
     move_photos_from_camera_to_comp(camera_path, new_folder)
     descriptions_file = create_keepers_folder(new_folder_name)
     print("--- %s seconds ---" % (time.time() - start_time))
+    os.startfile(new_folder)
     return descriptions_file
