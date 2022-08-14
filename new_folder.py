@@ -3,7 +3,8 @@ from datetime import datetime
 import shutil
 import time
 
-
+# 102D7000 - Moms D7000
+# 108D3400 - My Camera
 camera_path = "E:/DCIM/108D3400"
 photos_path = r"D:\Photos"
 keepers_path = r"D:\Photos\Keepers"
