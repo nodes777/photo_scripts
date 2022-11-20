@@ -30,7 +30,7 @@ def move_photos_from_camera_to_comp(camera_path, new_folder):
     num_of_files = len(files_on_camera)
     # TODO: If moving files fails, delete the new_folder that was created
     for idx, file in enumerate(files_on_camera):
-        shutil.move(camera_path + "/" + file, new_folder)
+        shutil.copy2(camera_path + "/" + file, new_folder)
         # end="\r" print to start where last one ended, clears terminal line
         print(f"Moving {file} {idx}/{num_of_files}", end="\r")
 
@@ -46,7 +46,7 @@ def create_keepers_folder(new_folder_name):
         descriptions_template_path, new_keepers_folder)
     # Remove the "template" part of the name
     descriptions_file = new_keepers_folder + "\\" + descriptions_file_name
-    os.rename(descriptions_copy, descriptions_file)
+    shutil.move(descriptions_copy, descriptions_file)
     os.startfile(descriptions_file)
     os.startfile(new_keepers_folder)
     return descriptions_file
